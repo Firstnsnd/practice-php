@@ -1,19 +1,26 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: vaniot
+ * Date: 18-3-20
+ * Time: 下午5:24
+ */
 class ValidateCode
 {
-    private $chinese = '不乱于心困于情畏将来念过往如此安好每一个曾起舞的日子都是对生命的辜负';//随机因子
-    public $code;//验证码
+    private $charset = 'abcdefghkmnprstuvwxyzABCDEFGHKMNPRSTUVWXYZ23456789';//随机因子
+    private $code;//验证码
     private $codelen;//验证码长度
     private $width;//宽度
     private $height;//高度
     private $img;//图形资源句柄
     private $font;//指定的字体
     private $fontsize;//指定字体大小
+    private $fontcolor;//指定字体颜色
 
     //构造方法初始化
     public function __construct ($width = 130, $height = 50, $codelen = 4,$fontsize = 20)
     {
-        $this->font = './simsun.ttc';//注意字体路径要写对，否则显示不了图片
+        $this->font = './Elephant.ttf';//注意字体路径要写对，否则显示不了图片
         $this->codelen = $codelen;
         $this->height = $height;
         $this->width = $width;
@@ -24,15 +31,15 @@ class ValidateCode
     //生成随机码
     private function createCode()
     {
-        $chinese_arr = str_split($this->chinese,3);
-        $_len = count($chinese_arr) - 1;
+        $_len = strlen($this->charset) - 1;
         for ($i = 0;$i < $this->codelen;++$i) {
-            $this->code .= $chinese_arr[rand(0, $_len)];
+            $this->code .= $this->charset[mt_rand(0, $_len)];
         }
     }
 
+
     //生成背景
-    private function createBg()
+    public function createBg()
     {
         $this->img = imagecreatetruecolor($this->width, $this->height);
         $color = imagecolorallocate($this->img, mt_rand(157, 255), mt_rand(157, 255), mt_rand(157, 255));
@@ -40,7 +47,7 @@ class ValidateCode
     }
 
     //生成线条、雪花
-    private function createLine()
+    public function createLine()
     {
         //线条
         for ($i = 0;$i < 6;++$i) {
@@ -55,14 +62,15 @@ class ValidateCode
     }
 
     //生成文字
-    private function createFont()
+    public function createFont()
     {
         $_x = $this->width / $this->codelen;
         for ($i = 0;$i < $this->codelen;++$i) {
             $this->fontcolor = imagecolorallocate($this->img, mt_rand(0, 156), mt_rand(0, 156), mt_rand(0, 156));
-            imagettftext($this->img, $this->fontsize, mt_rand(-30, 30), $_x * $i + mt_rand(1, 5), $this->height / 1.4, $this->fontcolor, $this->font, mb_substr($this->code, $i, 1, 'utf8'));
+            imagettftext($this->img, $this->fontsize, mt_rand(-30, 30), $_x * $i + mt_rand(1, 5), $this->height / 1.4, $this->fontcolor, $this->font, $this->code[$i]);
         }
     }
+
     //输出
     private function outPut()
     {
@@ -71,7 +79,7 @@ class ValidateCode
         imagedestroy($this->img);
     }
 
-    //对外生成
+    //对外生成验证码
     public function doimg()
     {
         $this->createBg();
@@ -80,11 +88,5 @@ class ValidateCode
         $this->outPut();
     }
 
-    //获取验证码
-    public function getCode()
-    {
-        return $this->code;
-    }
-}
-?>
 
+}

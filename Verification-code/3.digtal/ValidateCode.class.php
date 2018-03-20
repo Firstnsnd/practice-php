@@ -1,9 +1,17 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: vaniot
+ * Date: 18-3-20
+ * Time: 下午5:36
+ */
+
 class ValidateCode
 {
-    private $chinese = '不乱于心困于情畏将来念过往如此安好每一个曾起舞的日子都是对生命的辜负';//随机因子
-    public $code;//验证码
-    private $codelen;//验证码长度
+
+    private $num = '1234567890';//随机因子
+    private $operators = '+-*%';//运算符 不要除法不然可能会出现小数
+    public  $code;//验证码
     private $width;//宽度
     private $height;//高度
     private $img;//图形资源句柄
@@ -13,7 +21,7 @@ class ValidateCode
     //构造方法初始化
     public function __construct ($width = 130, $height = 50, $codelen = 4,$fontsize = 20)
     {
-        $this->font = './simsun.ttc';//注意字体路径要写对，否则显示不了图片
+        $this->font = './Elephant.ttf';//注意字体路径要写对，否则显示不了图片
         $this->codelen = $codelen;
         $this->height = $height;
         $this->width = $width;
@@ -24,11 +32,15 @@ class ValidateCode
     //生成随机码
     private function createCode()
     {
-        $chinese_arr = str_split($this->chinese,3);
-        $_len = count($chinese_arr) - 1;
-        for ($i = 0;$i < $this->codelen;++$i) {
-            $this->code .= $chinese_arr[rand(0, $_len)];
-        }
+        $_len = strlen($this->num) - 1;
+        $_operators = strlen($this->operators) - 1;
+        $this->code .= $this->num[mt_rand(0, $_len)];
+        // 随机出运算符
+        $this->code .= $this->operators[mt_rand(0, $_operators)];
+        // 去0
+        $no0_num = substr($this->num,0,$_len);
+        $this->code .= $no0_num[mt_rand(0, $_len-1)];
+
     }
 
     //生成背景
@@ -58,9 +70,9 @@ class ValidateCode
     private function createFont()
     {
         $_x = $this->width / $this->codelen;
-        for ($i = 0;$i < $this->codelen;++$i) {
+        for ($i = 0;$i < strlen($this->code);++$i) {
             $this->fontcolor = imagecolorallocate($this->img, mt_rand(0, 156), mt_rand(0, 156), mt_rand(0, 156));
-            imagettftext($this->img, $this->fontsize, mt_rand(-30, 30), $_x * $i + mt_rand(1, 5), $this->height / 1.4, $this->fontcolor, $this->font, mb_substr($this->code, $i, 1, 'utf8'));
+            imagettftext($this->img, $this->fontsize, mt_rand(-30, 30), $_x * $i + mt_rand(1, 5), $this->height / 1.4, $this->fontcolor, $this->font, $this->code[$i]);
         }
     }
     //输出
@@ -83,8 +95,6 @@ class ValidateCode
     //获取验证码
     public function getCode()
     {
-        return $this->code;
+        return strtolower($this->code);
     }
 }
-?>
-
