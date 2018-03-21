@@ -32,7 +32,7 @@
 				 </form>
 				</div>
 				<div style="margin-top:40px;">
-					 <input class="form-control btn btn-info" type="button" value="登录"/>
+					 <input class="form-control btn btn-info" type="button" onclick="onLoginClick()" value="登录"/>
 				</div>
 		 </div>
 	</div>
@@ -42,5 +42,32 @@
     $('#oimg').click(function (){
         $(this).attr('src','validateCode.php?random='+Math.random());
     });
+    function onLoginClick() {
+        // 帐号、验证码
+        var username = $('input[name=username]').val();
+        var password = $('input[name=password]').val();
+        var validateCode = $('input[name=validateCode]').val();
+        $.ajax({
+            type: "POST",
+            url: 'loginController.php',
+            dataType: 'json',
+            cache: false,
+            data: {username: username, password: password, validateCode: validateCode},
+            success: function (data) {
+                if (data == '0') {
+                    alert('验证码错误！');
+                } else if (data == '00') {
+                    alert('账号或密码错误！');
+                } else {
+                    location.href = "https://www.shiyanlou.com/";
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr);
+                console.log(status);
+                console.log(error);
+            }
+        });
+    }
 </script>
 </html>

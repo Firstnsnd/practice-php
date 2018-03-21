@@ -78,6 +78,10 @@ class ValidateCode
       $this->createFont();
       $this->outPut();
   }
+    public function getCode()
+    {
+        return strtolower($this->code);
+    }
 
 }
 ?>
