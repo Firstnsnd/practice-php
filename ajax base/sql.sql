@@ -15,3 +15,9 @@ INSERT INTO `ajaxtest` VALUES ('2','张三', 'lisi', '20', '男'); #插入数据
 INSERT INTO `ajaxtest` VALUES ('3','王五', 'lisi', '25', '男'); #插入数据
 INSERT INTO `ajaxtest` VALUES ('4','韩梅梅', 'lisi', '25', '女'); #插入数据
 INSERT INTO `ajaxtest` VALUES ('5','张莉', 'lisi', '25', '女'); #插入数据
+truncate ajaxtest;
+INSERT INTO `ajaxtest` VALUES ('1', 'lisi', 'lisi', '15', '男');
+INSERT INTO `ajaxtest` VALUES ('2', 'zhangsan', 'lisi', '20', '男');
+INSERT INTO `ajaxtest` VALUES ('3', 'wangwu', 'lisi', '25', '男');
+INSERT INTO `ajaxtest` VALUES ('4', 'hanmeimei', 'lisi', '25', '女');
+INSERT INTO `ajaxtest` VALUES ('5', 'zhangli', 'lisi', '25', '女');
