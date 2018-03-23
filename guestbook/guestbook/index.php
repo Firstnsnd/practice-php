@@ -14,7 +14,7 @@ $gb_count_sql = 'SELECT count(*) FROM ' . GB_TABLE_NAME . ' WHERE status = 0';
 DB::connect();
 
 $gb_count_res = mysqli_query(DB::$con,$gb_count_sql);
-$gb_count = mysqli_fetch_row($gb_count_res)[0];
+$gb_count = @mysqli_fetch_row($gb_count_res)[0];
 // var_dump($gb_count);
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $pagenum = ceil($gb_count / PER_PAGE_GB);
@@ -29,7 +29,7 @@ $pagedata_sql = 'SELECT  nickname,content,email,createtime,reply,replytime FROM 
 
 $sql_page_result = mysqli_query(DB::$con,$pagedata_sql);
 // var_dump($sql_page_result);
-while($temp = mysqli_fetch_array($sql_page_result)) {
+while($temp = @mysqli_fetch_array($sql_page_result)) {
     $sql_page_array[] = $temp;
 }
 DB::close();

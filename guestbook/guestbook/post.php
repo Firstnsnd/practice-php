@@ -28,6 +28,7 @@ DB::close();
 if($insert_status) {
 	 echo json_encode(['error'=>'0','msg'=>'Success message']);
 } else{
-	echo json_encode(['error'=>'1','msg'=>'Messages failed']);
+	//echo json_encode(['error'=>'1','msg'=>'Messages failed']);
+    echo json_encode(['error'=>'1','msg'=>$sql_insert]);
 }
 

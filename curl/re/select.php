@@ -9,7 +9,7 @@ header('content-type:text/html; charset=utf8');
 //定义数据库连接的参数
 define("DB_HOST","localhost");  
 define("DB_USER","root");  
-define("DB_PWD","123456");
+define("DB_PWD","");
 define("DB_NAME","curl");  
 define("DB_CHARSET","utf8");  
 //数据库连接方法

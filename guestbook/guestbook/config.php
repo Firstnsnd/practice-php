@@ -2,7 +2,7 @@
 
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
-define('DB_PWD', '');
+define('DB_PWD', '123456');
 define('DB_NAME', 'guestbook');
 define('GB_TABLE_NAME', 'guestbook');
 define('ADMIN_TABLE_NAME', 'user');

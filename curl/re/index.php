@@ -9,7 +9,7 @@ header('content-type:text/html; charset=utf8');
 //定义数据库连接的参数
 define("DB_HOST","localhost");  
 define("DB_USER","root");  
-define("DB_PWD","123456");
+define("DB_PWD","");
 define("DB_NAME","curl");  
 define("DB_CHARSET","utf8");  
 //1.初始化，创建一个新cURL资源
@@ -29,15 +29,15 @@ $resault=curl_exec($curl);
 curl_close($curl);
 
 //匹配标题和图片
-preg_match_all("/<div class=\"course-name\"(.*?)>(.*?)<\/div>/",$resault, $out, PREG_SET_ORDER);
+preg_match_all("/<div class=\"course-name\"(.*?)>(.*?)<\/div>/",$resault, $title, PREG_SET_ORDER);
 preg_match_all("/https\:\/\/dn-simplecloud.shiyanlou.com\/(.*?)g/",$resault, $img, PREG_SET_ORDER);
 
 //获取标题和图片数组的方法
 //获取标题数组
 function curlTitle($arr=array()){
     //使用foreach循环输出title，在上面例子里我们可以看到title在数组中的位置。
-    foreach($arr as $key => $value){ 
-        @$resault .= $value[2]."|";
+    foreach($arr[0] as $key => $value){
+        @$resault .= $value."|";
     }
     //array_filter去掉数组中的空值，explode把字符串以数组形式重组
     return array_filter(explode("|",$resault));
@@ -51,8 +51,8 @@ function curlImg($arr=array()){
     return array_filter(explode("|",$resault));
 }
 //把两个数组合成一个数组
-foreach (curlTitle($out) as $k => $r) {
-     $Arrend[] = array(curlTitle($out)[$k],curlImg($img)[$k]);
+foreach (curlTitle($title) as $k => $r) {
+     $Arrend[] = array(curlTitle($title)[$k],curlImg($img)[$k]);
 }
 //数据库连接方法
 function connect(){  

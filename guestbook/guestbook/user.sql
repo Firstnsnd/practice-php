@@ -28,3 +28,4 @@ CREATE TABLE `user` (
   PRIMARY KEY (`uid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 SET FOREIGN_KEY_CHECKS=1;
+INSERT INTO user(nickname, password, createtime, level)    values( 'shiyanlou','21232f297a57a5a743894a0e4a801fc3', 1423018916, 9);
