@@ -78,7 +78,7 @@ if(file_exists($file_path)){
 }else{
     echo 'File No Exist!';
 }
-fclose($fp)
+fclose($fp);
 
 //======文件拷贝======
 //此处添加代码
