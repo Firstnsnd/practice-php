@@ -69,7 +69,7 @@ $info = $wechatObj->addMaterial('thumb',$data);
 
 //添加视频(需做视频描述说明)
 $data = ['media'=>'@mp4/test.mp4'];
-$desc = ['title'=>'shiyanlou','introduction'=>'woshi ce shi'];
+$desc = ['title'=>'shiyanlou','introduction'=>'wo shi ce shi'];
 $info = $wechatObj->addMaterial('video',$data,true,$desc);
 // array(1) { ["media_id"]=> string(43) "oCmCA6JW8AUym2t9uhqzeKtiYQzppXBMyn6U2k2IMmU" }
 
